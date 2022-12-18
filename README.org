@@ -1,0 +1,5 @@
+#+TITLE: Piensa en Haskell y en Python (Ejercicios de programación con Haskell y con Python)
+
+En este repositorio se irá escribiendo un libro a elaborado a partir de
+los ejercicios de programación con Haskell y Python publicado en el blog
+[[https://www.glc.us.es/~jalonso/exercitium][Exercitium]].

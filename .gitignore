@@ -274,3 +274,8 @@ TSWLatexianTemp*
 
 # Makeindex log files
 *.lpz
+/Makefile
+*.bib
+*.tex
+*.png
+*.xmp
