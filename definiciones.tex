@@ -1,0 +1,102 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Ejercicios                                                                %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newtheorem{ejercicio}{Ejercicio}[chapter]
+\newtheorem{ejercicio*}{Ejercicio}[section]
+
+\newenvironment{solucion}
+  {\noindent \textbf{Solución: }}
+  {}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% § Código                                                                 %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\DefineVerbatimEnvironment{code}{Verbatim}
+{fontsize=\normalsize,
+ fontfamily=cmtt,
+ frame=single}
+
+\DefineVerbatimEnvironment{code*}{Verbatim}
+{fontsize=\normalsize,
+ fontfamily=cmtt,
+ frame=single}
+
+\DefineVerbatimEnvironment{sesion}{Verbatim}
+{commandchars=\\\{\},
+ codes={\catcode`$=3\catcode`$=3},
+ fontsize=\normalsize,
+ fontfamily=cmtt,
+ fontshape=n,
+ xleftmargin=3mm,
+ frame=leftline}
+
+
+\DefineVerbatimEnvironment{sesion*}{Verbatim}
+{%commandchars=\\\{\},
+ codes={\catcode`$=3\catcode`$=3},
+ fontsize=\normalsize,
+ fontshape=n,
+ fontfamily=cmtt,
+ xleftmargin=3mm,
+ frame=leftline}
+
+\DefineVerbatimEnvironment{preludio}{Verbatim}
+{% commandchars=\\\{\},
+ codes={\catcode`$=3\catcode`$=3},
+ fontsize=\normalsize,
+ fontfamily=cmtt,
+ frame=single,
+ framesep=2mm,
+ label=\mbox{Prelude}}
+
+\DefineVerbatimEnvironment{erroneo}{Verbatim}
+{% commandchars=\\\{\},
+ codes={\catcode`$=3\catcode`$=3},
+ fontsize=\normalsize,
+ fontfamily=cmtt,
+ frame=single,
+ framesep=2mm,
+ label=\mbox{Código erróneo}}
+
+\DefineVerbatimEnvironment{codigo}{Verbatim}
+{% commandchars=\\\{\},
+ codes={\catcode`$=3\catcode`$=3},
+ fontsize=\normalsize,
+ fontfamily=cmtt,
+ frame=single}
+
+\DefineVerbatimEnvironment{nverbatim}{Verbatim}
+{commandchars=\\\{\},
+ codes={\catcode`$=3\catcode`$=3},
+ fontsize=\normalsize,
+ fontfamily=cmtt,
+ xleftmargin=3mm}
+
+\DefineVerbatimEnvironment{nverbatim*}{Verbatim}
+{% commandchars=\\\{\},
+ codes={\catcode`$=3\catcode`$=3},
+ fontsize=\normalsize,
+ fontfamily=cmtt,
+ xleftmargin=3mm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% § Definiciones                                                           %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\haskell}[1]{\inputminted[firstline=7]{haskell}{../Exercitium/Exercitium/src/#1.hs}}
+\newcommand{\python}[1]{\inputminted[firstline=7]{python}{../Exercitium-Python/src/#1.py}}
+
+\newenvironment{enumerate*}%
+  {\vspace*{-0mm}
+   \begin{enumerate}%
+    \setlength{\itemsep}{0pt}%
+    \setlength{\parskip}{0pt}}%
+  {\vspace*{-0mm}
+   \end{enumerate}}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

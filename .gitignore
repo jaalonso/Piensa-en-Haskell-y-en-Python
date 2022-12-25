@@ -276,6 +276,5 @@ TSWLatexianTemp*
 *.lpz
 /Makefile
 *.bib
-*.tex
 *.png
 *.xmp

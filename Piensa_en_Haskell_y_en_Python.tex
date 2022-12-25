@@ -1,0 +1,896 @@
+% Piensa_en_Haskell_y_en_Python.tex
+% Piensa en Haskell y en Python.
+% José A. Alonso Jiménez <https://jaalonso.github.io>
+% Sevilla, 15-diciembre-2022
+% ======================================================================
+
+\documentclass[a4paper,12pt,twoside]{book}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% § Paquetes adicionales
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Configuración para XeLaTeX
+\usepackage{tocloft}
+\setlength{\cftbeforechapskip}{2ex}
+\setlength{\cftbeforesecskip}{0.5ex}
+\setlength{\cftsecnumwidth}{12mm}
+\setlength{\cftsubsecindent}{18mm}
+
+\usepackage{fontspec}
+\usepackage{xltxtra}
+\defaultfontfeatures{Ligatures=TeX,Numbers=OldStyle}
+\setromanfont{DejaVu Sans}
+\setmonofont{DejaVu Sans Mono}[Scale={0.90}]
+% Nota: La lista de fuentes disponibles se obtiene con fc-list
+
+\usepackage[spanish]{babel}
+\usepackage{fancyvrb}
+\usepackage{a4wide}
+\usepackage{minted}
+
+% \usepackage{titletoc}
+% % \contentsmargin{2.55em}
+% % \dottedcontents{chapter}[0em]{}{32em}{1pc}
+% \dottedcontents{section}[4.5em]{}{3.3em}{1pc}
+
+\linespread{1.05}
+\setlength{\parindent}{2em}
+\raggedbottom
+
+\usepackage[%
+  colorlinks=true,
+  urlcolor=blue,
+  % pdftex,
+  pdfauthor={José A. Alonso <jalonso@us.es>},%
+  pdftitle={Piensa en Haskell y en Python},%
+  pdfstartview=FitH,%
+  bookmarks=false]{hyperref}
+
+\setcounter{tocdepth}{1}
+% \setcounter{secnumdepth}{4}
+
+% \usepackage{tocstyle}
+% \usetocstyle{KOMAlike}
+
+% \usepackage{tocloft}
+% \renewcommand\cftpartnumwidth{3cm}
+
+\usepackage{minitoc}
+% \setlength\cftparskip{-2pt}
+% \setlength\cftbeforechapskip{0pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% § Cabeceras                                                              %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{fancyhdr}
+
+\addtolength{\headheight}{\baselineskip}
+
+\pagestyle{fancy}
+
+\cfoot{}
+
+\fancyhead{}
+\fancyhead[RE]{\mdseries\sffamily Ejercicios de programación con Python}
+\fancyhead[LO]{\mdseries\sffamily \nouppercase{\leftmark}}
+\fancyhead[LE,RO]{\mdseries\sffamily \thepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% § Definiciones
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input definiciones
+\def\mtctitle{Contenido}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% § Título
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{{\Huge Piensa en Haskell y en Python} \\
+       {\large (Ejercicios de programación con Haskell y con Python)} }
+\author{\href{http://www.cs.us.es/~jalonso}
+             {\Large José A. Alonso Jiménez} }
+\date{\vfill \hrule \vspace*{2mm}
+  \begin{tabular}{l}
+      \href{http://www.cs.us.es/glc}
+           {Grupo de Lógica Computacional} \\
+      \href{http://www.cs.us.es}
+           {Dpto. de Ciencias de la Computación e Inteligencia Artificial} \\
+      \href{http://www.us.es}
+           {Universidad de Sevilla}  \\
+      Sevilla, \today
+  \end{tabular}\hfill\mbox{}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% § Documento
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \includeonly{recusion_sobre_numeros_naturales}
+
+% \includexmp{licencia}
+
+\begin{document}
+
+\maketitle
+\newpage
+
+\input{licenciaCC}
+\newpage
+
+\dominitoc
+\tableofcontents
+\clearpage
+
+% \renewcommand{\chaptername}{Ejercicio}
+
+\chapter*{Introducción}
+
+Este libro es una introducción a la programación con Haskell y Python, a través de
+la resolución de ejercicios publicados diariamente en el blog
+\href{https://www.glc.us.es/~jalonso/exercitium}{Exercitium}
+\footnote{https://www.glc.us.es/~jalonso/exercitium}.
+Estos ejercicios están organizados siguiendo el orden de los
+\href{https://jaalonso.github.io/materias/PFconHaskell/temas.html}
+{Temas de programación funcional con Haskell}
+\footnote{https://jaalonso.github.io/materias/PFconHaskell/temas.html}.
+Las soluciones a los ejercicios están disponibles en dos repositorios de
+GitHub, uno con las
+\href{https://github.com/jaalonso/Exercitium}{soluciones en Haskell}
+\footnote{https://github.com/jaalonso/Exercitium}
+y otro con las
+\href{https://github.com/jaalonso/Exercitium-Python}{soluciones en Python}
+\footnote{https://github.com/jaalonso/Exercitium-Python}).
+Ambos repositorios están estructurados como proyectos utilizando
+\href{https://docs.haskellstack.org/en/stable/}{Stack}
+\footnote{https://docs.haskellstack.org/en/stable} y
+\href{https://python-poetry.org/}{Poetry}
+\footnote{https://python-poetry.org}, respectivamente. Se han
+escrito soluciones en Python con un estilo funcional similar al de
+Haskell, y se han comprobado con
+\href{http://mypy-lang.org}{mypy}
+\footnote{http://mypy-lang.org}
+que los tipos de las definiciones en Python son correctos. Además, se
+han dado varias soluciones a cada ejercicio, verificando su
+equivalencia (mediante
+\href{https://hackage.haskell.org/package/QuickCheck}{QuickCheck}
+\footnote{https://hackage.haskell.org/package/QuickCheck}
+en Haskell e Hypothesis
+\href{https://hypothesis.readthedocs.io/en/latest}{Hypothesis}
+\footnote{https://hypothesis.readthedocs.io/en/latest}
+en Python) y comparando su eficiencia.
+
+El libro actualmente consta de cinco capítulos. Los tres primeros
+capítulos tratan sobre cómo definir funciones usando composición,
+comprensión y recursión. El cuarto capítulo introduce las funciones de
+orden superior y el quinto muestra cómo definir y usar nuevos
+tipos. Tenga en cuenta que algunas de las soluciones a los ejercicios
+pueden no corresponder con el contenido del capítulo donde se
+encuentran. En futuras versiones del libro, se ampliará el contenido
+hasta completar el curso de
+\href{https://jaalonso.github.io/materias/PFconHaskell}
+{Programación funcional con Haskell}
+\footnote{https://jaalonso.github.io/materias/PFconHaskell}.
+
+% =====================================================================
+\chapter{Definiciones elementales de funciones}
+% =====================================================================
+
+En este capítulo se plantean ejercicios con definiciones elementales (no
+recursivas) de funciones. Se corresponden con los 4 primeros temas del
+\href{https://jaalonso.github.io/materias/PFconHaskell/temas.html}
+{Curso de programación funcional con Haskell}
+\footnote{https://jaalonso.github.io/materias/PFconHaskell/temas.html}.
+
+\minitoc
+
+\section{Media aritmética de tres números}
+\subsection*{En Haskell}
+\haskell{Media_aritmetica_de_tres_numeros}
+\subsection*{En Python}
+\python{media_aritmetica_de_tres_numeros}
+
+\section{Suma de monedas}
+\subsection*{En Haskell}
+\haskell{Suma_de_monedas}
+\subsection*{En Python}
+\python{suma_de_monedas}
+
+\section{Volumen de la esfera}
+\subsection*{En Haskell}
+\haskell{Volumen_de_la_esfera}
+\subsection*{En Python}
+\python{volumen_de_la_esfera}
+
+\section{Área de la corona circular}
+\subsection*{En Haskell}
+\haskell{Area_corona_circular}
+\subsection*{En Python}
+\python{area_corona_circular}
+
+\section{Último dígito}
+\subsection*{En Haskell}
+\haskell{Ultimo_digito}
+\subsection*{En Python}
+\python{ultimo_digito}
+
+\section{Máximo de tres números}
+\subsection*{En Haskell}
+\haskell{Maximo_de_tres_numeros}
+\subsection*{En Python}
+\python{maximo_de_tres_numeros}
+
+\section{El primero al final}
+\subsection*{En Haskell}
+\haskell{El_primero_al_final}
+\subsection*{En Python}
+\python{el_primero_al_final}
+
+\section{Los primeros al final}
+\subsection*{En Haskell}
+\haskell{Los_primeros_al_final}
+\subsection*{En Python}
+\python{los_primeros_al_final}
+
+\section{Rango de una lista}
+\subsection*{En Haskell}
+\haskell{Rango_de_una_lista}
+\subsection*{En Python}
+\python{rango_de_una_lista}
+
+\section{Reconocimiento de palindromos}
+\subsection*{En Haskell}
+\haskell{Reconocimiento_de_palindromos}
+\subsection*{En Python}
+\python{reconocimiento_de_palindromos}
+
+\section{Interior de una lista}
+\subsection*{En Haskell}
+\haskell{Interior_de_una_lista}
+\subsection*{En Python}
+\python{interior_de_una_lista}
+
+\section{Elementos finales}
+\subsection*{En Haskell}
+\haskell{Elementos_finales}
+\subsection*{En Python}
+\python{elementos_finales}
+
+\section{Segmento de una lista}
+\subsection*{En Haskell}
+\haskell{Segmento_de_una_lista}
+\subsection*{En Python}
+\python{segmento_de_una_lista}
+
+\section{Primeros y últimos elementos}
+\subsection*{En Haskell}
+\haskell{Primeros_y_ultimos_elementos}
+\subsection*{En Python}
+\python{primeros_y_ultimos_elementos}
+
+\section{Elemento mediano}
+\subsection*{En Haskell}
+\haskell{Elemento_mediano}
+\subsection*{En Python}
+\python{elemento_mediano}
+
+\section{Tres iguales}
+\subsection*{En Haskell}
+\haskell{Tres_iguales}
+\subsection*{En Python}
+\python{tres_iguales}
+
+\section{Tres diferentes}
+\subsection*{En Haskell}
+\haskell{Tres_diferentes}
+\subsection*{En Python}
+\python{tres_diferentes}
+
+\section{División segura}
+\subsection*{En Haskell}
+\haskell{Division_segura}
+\subsection*{En Python}
+\python{division_segura}
+
+\section{Disyunción excluyente}
+\subsection*{En Haskell}
+\haskell{Disyuncion_excluyente}
+\subsection*{En Python}
+\python{disyuncion_excluyente}
+
+\section{Mayor rectángulo}
+\subsection*{En Haskell}
+\haskell{Mayor_rectangulo}
+\subsection*{En Python}
+\python{mayor_rectangulo}
+
+\section{Intercambio de componentes de un par}
+\subsection*{En Haskell}
+\haskell{Intercambio_de_componentes_de_un_par}
+\subsection*{En Python}
+\python{intercambio_de_componentes_de_un_par}
+
+\section{Distancia entre dos puntos}
+\subsection*{En Haskell}
+\haskell{Distancia_entre_dos_puntos}
+\subsection*{En Python}
+\python{distancia_entre_dos_puntos}
+
+\section{Permutación cíclica}
+\subsection*{En Haskell}
+\haskell{Permutacion_ciclica}
+\subsection*{En Python}
+\python{permutacion_ciclica}
+
+\section{Mayor número con dos dígitos dados}
+\subsection*{En Haskell}
+\haskell{Mayor_numero_con_dos_digitos_dados}
+\subsection*{En Python}
+\python{mayor_numero_con_dos_digitos_dados}
+
+\section{Número de raíces de la ecuación de segundo grado}
+\subsection*{En Haskell}
+\haskell{Numero_de_raices_de_la_ecuacion_de_segundo_grado}
+\subsection*{En Python}
+\python{numero_de_raices_de_la_ecuacion_de_segundo_grado}
+
+\section{Raíces de la ecuación de segundo grado}
+\subsection*{En Haskell}
+\haskell{Raices_de_la_ecuacion_de_segundo_grado}
+\subsection*{En Python}
+\python{raices_de_la_ecuacion_de_segundo_grado}
+
+\section{Fórmula de Herón para el área de un triángulo}
+\subsection*{En Haskell}
+\haskell{Formula_de_Heron_para_el_area_de_un_triangulo}
+\subsection*{En Python}
+\python{formula_de_Heron_para_el_area_de_un_triangulo}
+
+\section{Intersección de intervalos cerrados}
+\subsection*{En Haskell}
+\haskell{Interseccion_de_intervalos_cerrados}
+\subsection*{En Python}
+\python{interseccion_de_intervalos_cerrados}
+
+\section{Números racionales}
+\subsection*{En Haskell}
+\haskell{Numeros_racionales}
+\subsection*{En Python}
+\python{numeros_racionales}
+
+% =====================================================================
+\chapter{Definiciones por comprensión}
+% =====================================================================
+
+En este capítulo se presentan ejercicios con definiciones por
+comprensión. Se corresponden con el
+\href{https://jaalonso.github.io/materias/PFconHaskell/temas/tema-5.html}
+{tema 5 del curso de programación funcional con Haskell}
+\footnote{https://jaalonso.github.io/materias/PFconHaskell/temas/tema-5.html}.
+
+\minitoc
+
+\section{Reconocimiento de subconjunto}
+\subsection*{En Haskell}
+\haskell{Reconocimiento_de_subconjunto}
+\subsection*{En Python}
+\python{reconocimiento_de_subconjunto}
+
+\section{Igualdad de conjuntos}
+\subsection*{En Haskell}
+\haskell{Igualdad_de_conjuntos}
+\subsection*{En Python}
+\python{igualdad_de_conjuntos}
+
+\section{Unión conjuntista de listas}
+\subsection*{En Haskell}
+\haskell{Union_conjuntista_de_listas}
+\subsection*{En Python}
+\python{union_conjuntista_de_listas}
+
+\section{Intersección conjuntista de listas}
+\subsection*{En Haskell}
+\haskell{Interseccion_conjuntista_de_listas}
+\subsection*{En Python}
+\python{interseccion_conjuntista_de_listas}
+
+\section{Diferencia conjuntista de listas}
+\subsection*{En Haskell}
+\haskell{Diferencia_conjuntista_de_listas}
+\subsection*{En Python}
+\python{diferencia_conjuntista_de_listas}
+
+\section{Divisores de un número}
+\subsection*{En Haskell}
+\haskell{Divisores_de_un_numero}
+\subsection*{En Python}
+\python{divisores_de_un_numero}
+
+\section{Divisores primos}
+\subsection*{En Haskell}
+\haskell{Divisores_primos}
+\subsection*{En Python}
+\python{divisores_primos}
+
+\section{Números libres de cuadrados}
+\subsection*{En Haskell}
+\haskell{Numeros_libres_de_cuadrados}
+\subsection*{En Python}
+\python{numeros_libres_de_cuadrados}
+
+\section{Suma de los primeros números naturales}
+\subsection*{En Haskell}
+\haskell{Suma_de_los_primeros_numeros_naturales}
+\subsection*{En Python}
+\python{suma_de_los_primeros_numeros_naturales}
+
+\section{Suma de los cuadrados de los primeros números naturales}
+\subsection*{En Haskell}
+\haskell{Suma_de_los_cuadrados_de_los_primeros_numeros_naturales}
+\subsection*{En Python}
+\python{suma_de_los_cuadrados_de_los_primeros_numeros_naturales}
+
+\section{Suma de cuadrados menos cuadrado de la suma}
+\subsection*{En Haskell}
+\haskell{Suma_de_cuadrados_menos_cuadrado_de_la_suma}
+\subsection*{En Python}
+\python{suma_de_cuadrados_menos_cuadrado_de_la_suma}
+
+\section{Triángulo aritmético}
+\subsection*{En Haskell}
+\haskell{Triangulo_aritmetico}
+\subsection*{En Python}
+\python{triangulo_aritmetico}
+
+\section{Suma de divisores}
+\subsection*{En Haskell}
+\haskell{Suma_de_divisores}
+\subsection*{En Python}
+\python{suma_de_divisores}
+
+\section{Números perfectos}
+\subsection*{En Haskell}
+\haskell{Numeros_perfectos}
+\subsection*{En Python}
+\python{numeros_perfectos}
+
+\section{Números abundantes}
+\subsection*{En Haskell}
+\haskell{Numeros_abundantes}
+\subsection*{En Python}
+\python{numeros_abundantes}
+
+\section{Números abundantes menores o iguales que n}
+\subsection*{En Haskell}
+\haskell{Numeros_abundantes_menores_o_iguales_que_n}
+\subsection*{En Python}
+\python{numeros_abundantes_menores_o_iguales_que_n}
+
+\section{Todos los abundantes hasta n son pares}
+\subsection*{En Haskell}
+\haskell{Todos_los_abundantes_hasta_n_son_pares}
+\subsection*{En Python}
+\python{todos_los_abundantes_hasta_n_son_pares}
+
+\section{Números abundantes impares}
+\subsection*{En Haskell}
+\haskell{Numeros_abundantes_impares}
+\subsection*{En Python}
+\python{numeros_abundantes_impares}
+
+\section{Suma de múltiplos de 3 ó 5}
+\subsection*{En Haskell}
+\haskell{Suma_de_multiplos_de_3_o_5}
+\subsection*{En Python}
+\python{suma_de_multiplos_de_3_o_5}
+
+\section{Puntos dentro del círculo}
+\subsection*{En Haskell}
+\haskell{Puntos_dentro_del_circulo}
+\subsection*{En Python}
+\python{puntos_dentro_del_circulo}
+
+\section{Aproximación del número e}
+\subsection*{En Haskell}
+\haskell{Aproximacion_del_numero_e}
+\subsection*{En Python}
+\python{aproximacion_del_numero_e}
+
+\section{Aproximación al límite de sen(x)/x cuando x tiende a cero}
+\subsection*{En Haskell}
+\haskell{Limite_del_seno}
+\subsection*{En Python}
+\python{limite_del_seno}
+
+\section{Cálculo del número π mediante la fórmula de Leibniz}
+\subsection*{En Haskell}
+\haskell{Calculo_de_pi_mediante_la_formula_de_Leibniz}
+\subsection*{En Python}
+\python{calculo_de_pi_mediante_la_formula_de_Leibniz}
+
+\section{Ternas pitagóricas}
+\subsection*{En Haskell}
+\haskell{Ternas_pitagoricas}
+\subsection*{En Python}
+\python{ternas_pitagoricas}
+
+\section{Ternas pitagóricas con suma dada}
+\subsection*{En Haskell}
+\haskell{Ternas_pitagoricas_con_suma_dada}
+\subsection*{En Python}
+\python{ternas_pitagoricas_con_suma_dada}
+
+\section{Producto escalar}
+\subsection*{En Haskell}
+\haskell{Producto_escalar}
+\subsection*{En Python}
+\python{producto_escalar}
+
+\section{Representación densa de polinomios}
+\subsection*{En Haskell}
+\haskell{Representacion_densa_de_polinomios}
+\subsection*{En Python}
+\python{representacion_densa_de_polinomios}
+
+\section{Base de datos de actividades.}
+\subsection*{En Haskell}
+\haskell{Base_de_dato_de_actividades}
+\subsection*{En Python}
+\python{base_de_dato_de_actividades}
+
+% =====================================================================
+\chapter{Definiciones por recursión}
+% =====================================================================
+
+En este capítulo se presentan ejercicios con definiciones por
+comprensión. Se corresponden con el
+\href{https://jaalonso.github.io/materias/PFconHaskell/temas/tema-6.html}
+{tema 6 del curso de programación funcional con Haskell}
+\footnote{https://jaalonso.github.io/materias/PFconHaskell/temas/tema-6.html}.
+
+\minitoc
+
+\section{Potencia entera}
+\subsection*{En Haskell}
+\haskell{Potencia_entera}
+\subsection*{En Python}
+\python{potencia_entera}
+
+\section{Algoritmo de Euclides del mcd}
+\subsection*{En Haskell}
+\haskell{Algoritmo_de_Euclides_del_mcd}
+\subsection*{En Python}
+\python{algoritmo_de_Euclides_del_mcd}
+
+\section{Dígitos de un número}
+\subsection*{En Haskell}
+\haskell{Digitos_de_un_numero}
+\subsection*{En Python}
+\python{digitos_de_un_numero}
+
+\section{Suma de los digitos de un número}
+\subsection*{En Haskell}
+\haskell{Suma_de_los_digitos_de_un_numero}
+\subsection*{En Python}
+\python{suma_de_los_digitos_de_un_numero}
+
+\section{Número a partir de sus dígitos}
+\subsection*{En Haskell}
+\haskell{Numero_a_partir_de_sus_digitos}
+\subsection*{En Python}
+\python{numero_a_partir_de_sus_digitos}
+
+\section{Exponente de la mayor potencia de x que divide a y}
+\subsection*{En Haskell}
+\haskell{Exponente_mayor}
+\subsection*{En Python}
+\python{exponente_mayor}
+
+\section{Producto cartesiano de dos conjuntos}
+\subsection*{En Haskell}
+\haskell{Producto_cartesiano_de_dos_conjuntos}
+\subsection*{En Python}
+\python{producto_cartesiano_de_dos_conjuntos}
+
+\section{Subconjuntos de un conjunto}
+\subsection*{En Haskell}
+\haskell{Subconjuntos_de_un_conjunto}
+\subsection*{En Python}
+\python{subconjuntos_de_un_conjunto}
+
+\section{El algoritmo de Luhn}
+\subsection*{En Haskell}
+\haskell{El_algoritmo_de_Luhn}
+\subsection*{En Python}
+\python{el_algoritmo_de_Luhn}
+
+\section{Números de Lychrel}
+\subsection*{En Haskell}
+\haskell{Numeros_de_Lychrel}
+\subsection*{En Python}
+\python{numeros_de_Lychrel}
+
+\section{Suma de los dígitos de una cadena}
+\subsection*{En Haskell}
+\haskell{Suma_de_digitos_de_cadena}
+\subsection*{En Python}
+\python{suma_de_digitos_de_cadena}
+
+\section{Primera en mayúscula y restantes en minúscula}
+\subsection*{En Haskell}
+\haskell{Mayuscula_inicial}
+\subsection*{En Python}
+\python{mayuscula_inicial}
+
+\section{Mayúsculas iniciales}
+\subsection*{En Haskell}
+\haskell{Mayusculas_iniciales}
+\subsection*{En Python}
+\python{mayusculas_iniciales}
+
+\section{Posiciones de un carácter en una cadena}
+\subsection*{En Haskell}
+\haskell{Posiciones_de_un_caracter_en_una_cadena}
+\subsection*{En Python}
+\python{posiciones_de_un_caracter_en_una_cadena}
+
+\section{Reconocimiento de subcadenas}
+\subsection*{En Haskell}
+\haskell{Reconocimiento_de_subcadenas}
+\subsection*{En Python}
+\python{reconocimiento_de_subcadenas}
+
+% =====================================================================
+\chapter{Funciones de orden superior}
+% =====================================================================
+
+En este capítulo se presentan ejercicios con definiciones por
+comprensión. Se corresponden con el
+\href{https://jaalonso.github.io/materias/PFconHaskell/temas/tema-7.html}
+{tema 7 del curso de programación funcional con Haskell}
+\footnote{https://jaalonso.github.io/materias/PFconHaskell/temas/tema-7.html}.
+
+\minitoc
+
+\section{Segmentos cuyos elementos cumplen una propiedad}
+\subsection*{En Haskell}
+\haskell{Segmentos_cuyos_elementos_cumple_una_propiedad}
+\subsection*{En Python}
+\python{segmentos_cuyos_elementos_cumple_una_propiedad}
+
+\section{Elementos consecutivos relacionados}
+\subsection*{En Haskell}
+\haskell{Elementos_consecutivos_relacionados}
+\subsection*{En Python}
+\python{elementos_consecutivos_relacionados}
+
+\section{Agrupación de elementos por posición}
+\subsection*{En Haskell}
+\haskell{Agrupacion_de_elementos_por_posicion}
+\subsection*{En Python}
+\python{agrupacion_de_elementos_por_posicion}
+
+\section{Concatenación de una lista de listas}
+\subsection*{En Haskell}
+\haskell{Contenacion_de_una_lista_de_listas}
+\subsection*{En Python}
+\python{concatenacion_de_una_lista_de_listas}
+
+\section{Aplica según propiedad}
+\subsection*{En Haskell}
+\haskell{Aplica_segun_propiedad}
+\subsection*{En Python}
+\python{aplica_segun_propiedad}
+
+\section{Máximo de una lista}
+\subsection*{En Haskell}
+\haskell{Maximo_de_una_lista}
+\subsection*{En Python}
+\python{maximo_de_una_lista}
+
+% =====================================================================
+\chapter{Tipos definidos y tipos de datos algebraicos}
+% =====================================================================
+
+En este capítulo se presentan ejercicios con definiciones por
+comprensión. Se corresponden con el
+\href{https://jaalonso.github.io/materias/PFconHaskell/temas/tema-9.html}
+{tema 9 del curso de programación funcional con Haskell}
+\footnote{https://jaalonso.github.io/materias/PFconHaskell/temas/tema-9.html}.
+
+\minitoc
+
+\section{Movimientos en el plano}
+\subsection*{En Haskell}
+\haskell{Movimientos_en_el_plano}
+\subsection*{En Python}
+\python{movimientos_en_el_plano}
+
+\section{El tipo de figuras geométricas}
+\subsection*{En Haskell}
+\haskell{El_tipo_de_figuras_geometricas}
+\subsection*{En Python}
+\python{el_tipo_de_figuras_geometricas}
+
+\section{El tipo de los números naturales}
+\subsection*{En Haskell}
+\haskell{El_tipo_de_los_numeros_naturales}
+\subsection*{En Python}
+\python{el_tipo_de_los_numeros_naturales}
+
+\section{El tipo de las listas}
+\subsection*{En Haskell}
+\haskell{El_tipo_de_las_listas}
+\subsection*{En Python}
+\python{el_tipo_de_las_listas}
+
+\section{El tipo de los árboles binarios}
+\subsection*{En Haskell}
+\haskell{El_tipo_de_los_arboles_binarios}
+\subsection*{En Python}
+\python{el_tipo_de_los_arboles_binarios}
+
+\section{El tipo de las fórmulas: Variables de una fórmula}
+\subsection*{En Haskell}
+\haskell{Variables_de_una_formula}
+\subsection*{En Python}
+\python{variables_de_una_formula}
+
+\section{El tipo de las fórmulas: Valor de una fórmula}
+\subsection*{En Haskell}
+\haskell{Valor_de_una_formula}
+\subsection*{En Python}
+\python{valor_de_una_formula}
+
+\section{El tipo de las fórmulas: Interpretaciones de una fórmula}
+\subsection*{En Haskell}
+\haskell{Interpretaciones_de_una_formula}
+\subsection*{En Python}
+\python{interpretaciones_de_una_formula}
+
+\section{El tipo de las fórmulas: Reconocedor de tautologías}
+\subsection*{En Haskell}
+\haskell{Validez_de_una_formula}
+\subsection*{En Python}
+\python{validez_de_una_formula}
+
+\section{Altura de un árbol binario}
+\subsection*{En Haskell}
+\haskell{Altura_de_un_arbol_binario}
+\subsection*{En Python}
+\python{altura_de_un_arbol_binario}
+
+\section{Aplicación de una función a un árbol}
+\subsection*{En Haskell}
+\haskell{Aplicacion_de_una_funcion_a_un_arbol}
+\subsection*{En Python}
+\python{aplicacion_de_una_funcion_a_un_arbol}
+
+\section{Árboles con la misma forma}
+\subsection*{En Haskell}
+\haskell{Arboles_con_la_misma_forma}
+\subsection*{En Python}
+\python{arboles_con_la_misma_forma}
+
+\section{Árbol con las hojas en la profundidad dada}
+\subsection*{En Haskell}
+\haskell{Arbol_con_las_hojas_en_la_profundidad_dada}
+\subsection*{En Python}
+\python{arbol_con_las_hojas_en_la_profundidad_dada}
+
+\section{El tipo de las expresiones aritméticas: Valor de una expresión}
+\subsection*{En Haskell}
+\haskell{Valor_de_una_expresion_aritmetica}
+\subsection*{En Python}
+\python{valor_de_una_expresion_aritmetica}
+
+\section{El tipo de las expresiones aritméticas: Valor de la resta}
+\subsection*{En Haskell}
+\haskell{Valor_de_la_resta}
+\subsection*{En Python}
+\python{valor_de_la_resta}
+
+\section{Número de hojas de un árbol binario}
+\subsection*{En Haskell}
+\haskell{Numero_de_hojas_de_un_arbol_binario}
+\subsection*{En Python}
+\python{numero_de_hojas_de_un_arbol_binario}
+
+\section{Profundidad de un árbol binario}
+\subsection{En Haskell}
+\haskell{Profundidad_de_un_arbol_binario}
+\subsection*{En Python}
+\python{profundidad_de_un_arbol_binario}
+
+\section{Recorrido de árboles binarios}
+\subsection{En Haskell}
+\haskell{Recorrido_de_arboles_binarios}
+\subsection{En Python}
+\python{recorrido_de_arboles_binarios}
+
+\section{Imagen especular de un árbol binario}
+\subsection{En Haskell}
+\haskell{Imagen_especular_de_un_arbol_binario}
+\subsection{En Python}
+\python{imagen_especular_de_un_arbol_binario}
+
+\section{Subárbol de profundidad dada}
+\subsection{En Haskell}
+\haskell{Subarbol_de_profundidad_dada}
+\subsection{En Python}
+\python{subarbol_de_profundidad_dada}
+
+\section{Árbol de profundidad n con nodos iguales}
+\subsection{En Haskell}
+\haskell{Arbol_de_profundidad_n_con_nodos_iguales}
+\subsection{En Python}
+\python{arbol_de_profundidad_n_con_nodos_iguales}
+
+\section{Suma de un árbol}
+\subsection{En Haskell}
+\haskell{Suma_de_un_arbol}
+\subsection{En Python}
+\python{suma_de_un_arbol}
+
+\part*{Apéndices}
+\appendix
+
+% A. Resumen de funciones Haskell
+% \include{resumen_Haskell}
+
+% B. Método de Pólya para la resolución de problemas
+\include{metodo_de_Polya}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Bibliografía                                                            %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\nocite{Allen-16a}
+\nocite{Alonso-12a}
+\nocite{Alonso-19a}
+\nocite{Alonso-21a}
+\nocite{Alonso-22a}
+\nocite{Bird-10}
+\nocite{Bird-14a}
+\nocite{Bird-99a}
+\nocite{Bird-Gibbons-20a}
+\nocite{Casamayou-12a}
+\nocite{Downey-02a}
+\nocite{Goodrich-13data}
+\nocite{Guttag-16introduction}
+\nocite{Hall-10a}
+\nocite{Hetland-11apython}
+\nocite{Hudak-12a}
+\nocite{Hunt-19a}
+\nocite{Hunt-19b}
+\nocite{Hutton-16a}
+\nocite{Kurt-18a}
+\nocite{Lipovača}
+\nocite{Lott-18a}
+\nocite{OSullivan-08a}
+\nocite{Okasaki-19a}
+\nocite{Padmanabhan-17a}
+\nocite{Polya-65a}
+\nocite{Rabhi-99a}
+\nocite{Rubio-17a}
+\nocite{Ruiz-04}
+\nocite{Saha-15a}
+\nocite{Sajanikar-17a}
+\nocite{Sannella-22a}
+\nocite{Serrano-14a}
+\nocite{Shukla-14a}
+\nocite{Stephenson-15a}
+\nocite{Thompson-11a}
+\nocite{vanHattem-22a}
+
+\addcontentsline{toc}{chapter}{Bibliografía}
+\bibliographystyle{abbrv}
+\bibliography{Piensa_en_Haskell_y_en_Python}
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
