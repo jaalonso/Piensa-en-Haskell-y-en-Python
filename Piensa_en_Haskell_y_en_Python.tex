@@ -14,8 +14,10 @@
 \usepackage{tocloft}
 \setlength{\cftbeforechapskip}{2ex}
 \setlength{\cftbeforesecskip}{0.5ex}
-\setlength{\cftsecnumwidth}{14mm}
+\setlength{\cftchapnumwidth}{2em}
+\setlength{\cftsecnumwidth}{4em}
 \setlength{\cftsubsecindent}{20mm}
+\cftsetindents{chapter}{0em}{\cftchapnumwidth}
 
 \usepackage{fontspec}
 \usepackage{xltxtra}
@@ -1675,6 +1677,42 @@ comprensión. Se corresponden con el
 \haskell{Grafo_Grados_positivos_y_negativos}
 \subsection{En Python}
 \python{Grafo_Grados_positivos_y_negativos}
+
+\section{Generadores de grafos arbitrarios}
+\subsection{En Haskell}
+\haskell{TAD/GrafoGenerador}
+\subsection{En Python}
+\python{TAD/GrafoGenerador}
+
+\section{Propiedades de grados positivos y negativos}
+\subsection{En Haskell}
+\haskell{Grafo_Propiedades_de_grados_positivos_y_negativos}
+\subsection{En Python}
+\python{Grafo_Propiedades_de_grados_positivos_y_negativos}
+
+\section{Grado de un vértice}
+\subsection{En Haskell}
+\haskell{Grafo_Grado_de_un_vertice}
+\subsection{En Python}
+\python{Grafo_Grado_de_un_vertice}
+
+\section{Lema del apretón de manos}
+\subsection{En Haskell}
+\haskell{Grafo_Lema_del_apreton_de_manos}
+\subsection{En Python}
+\python{Grafo_Lema_del_apreton_de_manos}
+
+\section{Grafos regulares}
+\subsection{En Haskell}
+\haskell{Grafo_Grafos_regulares}
+\subsection{En Python}
+\python{Grafo_Grafos_regulares}
+
+\section{Grafos k--regulares}
+\subsection{En Haskell}
+\haskell{Grafo_Grafos_k_regulares}
+\subsection{En Python}
+\python{Grafo_Grafos_k_regulares}
 
 \part*{Apéndices}
 \appendix
